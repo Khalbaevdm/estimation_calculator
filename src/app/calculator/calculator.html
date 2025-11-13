@@ -1,0 +1,87 @@
+<div *ngIf="loading">
+  Загрузка данных...
+</div>
+
+<div *ngIf="!loading">
+
+  <h2>Выбор платформ</h2>
+
+  <label>
+    <input type="checkbox" [(ngModel)]="options.mobile" />
+    Мобильное приложение
+  </label>
+  <br>
+
+  <label>
+    <input type="checkbox" [(ngModel)]="options.backend" />
+    Бэкенд
+  </label>
+  <br>
+
+  <label>
+    <input type="checkbox" [(ngModel)]="options.frontend" />
+    Фронтенд
+  </label>
+  <br>
+
+  <label>
+    <input type="checkbox" [(ngModel)]="options.admin" />
+    Админка
+  </label>
+
+  <hr>
+
+<h2>Задачи</h2>
+
+<div *ngFor="let module of modules">
+  <h3>{{ module.name }}</h3>
+
+  <div *ngFor="let task of groupedTasks[module.id]">
+    <label>
+      <input type="checkbox" [(ngModel)]="task.selected" />
+      {{ task.name }}
+    </label>
+  </div>
+</div>
+
+<hr>
+
+  <button (click)="calculate()">Рассчитать</button>
+
+  <div *ngIf="totals.totalMin > 0" style="margin-top: 30px;">
+
+  <h3>Детализация стоимости</h3>
+
+  <table style="width: 300px; border-collapse: collapse;">
+    <tr *ngIf="options.mobile">
+      <td>Мобильное приложение</td>
+      <td style="text-align: right">{{ totals.mobile | number:'1.0-0'}} ₽</td>
+    </tr>
+    <tr *ngIf="options.backend">
+      <td>Бэкенд</td>
+      <td style="text-align: right">{{ totals.backend | number:'1.0-0'}} ₽</td>
+    </tr>
+    <tr *ngIf="options.frontend">
+      <td>Фронтенд</td>
+      <td style="text-align: right">{{ totals.frontend | number:'1.0-0'}} ₽</td>
+    </tr>
+    <tr *ngIf="options.admin">
+      <td>Админка</td>
+      <td style="text-align: right">{{ totals.admin | number:'1.0-0'}} ₽</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><hr></td>
+    </tr>
+
+    <tr>
+      <td><strong>Итого</strong></td>
+      <td style="text-align: right">
+        <strong>{{ totals.totalMin | number:'1.0-0'}} ₽ — {{ totals.totalMax | number:'1.0-0'}} ₽</strong>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+</div>
